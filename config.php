@@ -10,7 +10,6 @@
 
 
 if ($_SERVER['SERVER_NAME'] == "thawing-stream-94645.herokuapp.com") {
-    echo 'i am here';
     $host = 'us-cdbr-iron-east-01.cleardb.net';
     $username = 'b96f3dfb1de729';
     $password = '015e215c';
