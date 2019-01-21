@@ -1,35 +1,98 @@
-.treeHTML {
-    line-height: normal;
+body {
+    font-family: Arial;
 }
-.treeHTML details {
+
+ul.tree li {
+    list-style-type: none;
+    position: relative;
+
+}
+
+ul.tree li ul {
+    display: none;
+}
+
+ul.tree li.open > ul {
     display: block;
 }
-.treeHTML div {
-    position: relative;
-    margin: 0 0 0 .5em;
-    padding: 0 0 0 1.2em;
+
+ul.tree li a {
+
+    color:#408000;
+
+    border-bottom:0.01em;
+
 }
-.treeHTML div:not(:last-child) { /* необязательно */
-    border-left: 1px solid #ccc;
-}
-.treeHTML div:before { /* необязательно */
-    content: "";
+
+ul.tree li a:before {
+    height: 1em;
+    padding:0 .1em;
+    font-size: .8em;
+    display: block;
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 1.1em;
-    height: .5em;
-    border-bottom: 1px solid #ccc;
+    left: -1.3em;
+    top: .2em;
 }
-.treeHTML div:last-child:before { /* необязательно */
-    border-left: 1px solid #ccc;
+
+ul.tree li > a:not(:last-child):before {
+    content: '+';
 }
-.treeHTML summary { /* стилями можно задать любую форму, например, тот же плюс. Я специально не стала усложнять, чтобы можно было проще разобраться в коде */
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
+
+ul.tree li.open > a:not(:last-child):before {
+    content: '-';
 }
-.treeHTML details[open] summary { /* убрать рамку при фокусе */
-    outline: none;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*!* Remove default bullets *!*/
+/*ul, #myUL {*/
+    /*list-style-type: none;*/
+/*}*/
+
+/*!* Remove margins and padding from the parent ul *!*/
+/*#myUL {*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+/*}*/
+
+/*!* Style the caret/arrow *!*/
+/*.caret {*/
+    /*cursor: pointer;*/
+    /*user-select: none; !* Prevent text selection *!*/
+/*}*/
+
+/*!* Create the caret/arrow with a unicode, and style it *!*/
+/*.caret::before {*/
+    /*content: "\25B6";*/
+    /*color: black;*/
+    /*display: inline-block;*/
+    /*margin-right: 6px;*/
+/*}*/
+
+/*!* Rotate the caret/arrow icon when clicked on (using JavaScript) *!*/
+/*.caret-down::before {*/
+    /*transform: rotate(90deg);*/
+/*}*/
+
+/*!* Hide the nested list *!*/
+/*.nested {*/
+    /*display: none;*/
+/*}*/
+
+/*!* Show the nested list when the user clicks on the caret/arrow (with JavaScript) *!*/
+/*.active {*/
+    /*display: block;*/
+/*}*/
+
+

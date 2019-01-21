@@ -4,28 +4,252 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="style.css">
+    <script src="jquery3.js"></script>
 </head>
+
+<script>
+
+    var allPersons={};
+    let person={};
+    let selectName = '';
+    $( document ).ready(function() {
+
+        var  dates = {
+            "action": "getListName",
+        };
+        $.ajax({
+            url: 'relationsFaker.php',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+
+                createList(data);
+            },
+            data: {data: JSON.stringify(dates)}
+        });
+
+
+
+    });
+
+
+
+    //Добавление списка сотрудников в select
+    function createList(person) {
+        let list = document.getElementById("listEmployers");
+        let el = document.createElement('option');
+        el.innerHTML='';
+        el.addEventListener('click',function (e) {
+            createFullList();
+        });
+        list.appendChild(el);
+        person.forEach(function(item, i) {
+            let el = document.createElement('option');
+            el.id=item.id;
+            el.innerHTML=item.name;
+            el.addEventListener('click',function (e) {
+                showListFromEmployer(item.name);
+            });
+            list.appendChild(el);
+
+        });
+
+        //Функция для получения всего дерева
+        createFullList();
+
+    }
+
+
+
+    function showListFromEmployer(name){
+        clearList();
+        d = document.getElementById('container');
+            // let first = document.getElementById('first');
+            // let ul = document.createElement('ul');
+            //
+            // let li = document.createElement('li');
+            // li.innerHtml = name;
+            // ul.appendChild(li);
+            //
+            //
+            // d.appendChild(ul);
+            selectName = name;
+            var  dates = {
+                'action': 'getListFromEmployer',
+                'name' : name,
+            };
+            $.ajax({
+                url: 'relationsFaker.php',
+                type: 'POST',
+                dataType: 'JSON',
+                success: function (data) {
+
+                    createTree(d,data,false);
+                },
+                data: {data: JSON.stringify(dates)}
+            });
+
+
+
+    }
+
+
+    function clearList() {
+        let d = document.getElementById('container');
+        d.innerHTML="";
+    }
+    function createFullList(person) {
+        clearList();
+        let dates = {
+            "action": "getAll",
+        };
+        $.ajax({
+            url: 'relationsFaker.php',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                allPersons = data;
+
+                let container = document.getElementById('container');
+
+                createTree(container, allPersons,true);
+
+
+            },
+            data: {data: JSON.stringify(dates)}
+        });
+
+
+    }
+    function createTree(container, obj,fromStart) {
+
+        container.appendChild(createTreeDom(obj));
+        formatTree();
+        if (!fromStart) {
+            hideAll();
+        }else
+            showAll();
+
+
+    }
+
+    function createTreeDom(obj) {
+        // если нет детей, то рекурсивный вызов ничего не возвращает
+        // так что вложенный UL не будет создан
+        if (isObjectEmpty(obj)) return;
+
+        var ul = document.createElement('ul');
+
+        for (var key in obj) {
+            var li = document.createElement('li');
+            li.innerHTML = key;
+
+            var childrenUl = createTreeDom(obj[key]);
+            if (childrenUl) {
+                li.appendChild(childrenUl);
+            }
+
+            ul.appendChild(li);
+        }
+
+        return ul;
+    }
+
+
+    function isObjectEmpty(obj) {
+        for (let key in obj) {
+            return false;
+        }
+        return true;
+    }
+
+    function formatTree() {
+        var tree = document.getElementsByTagName('ul')[0];
+
+        /* catch clicks on whole tree */
+
+
+        var treeLis = tree.getElementsByTagName('li');
+        /* wrap all textNodes into spans */
+        for (var i = 0; i < treeLis.length; i++) {
+
+            let li = treeLis[i];
+
+            let a = document.createElement('a');
+            a.setAttribute('href','#');
+            li.insertBefore(a, li.firstChild);
+            a.appendChild(a.nextSibling);
+
+
+        }
+        //Вешается обработчик на все пункты меню
+
+
+        //раскрывается весь список
+
+    }
+
+    function showAll() {
+        hideAll();
+        let tree1 = document.querySelectorAll('ul.tree a:not(:last-child)');
+        for (let i = 0; i < tree1.length; i++) {
+            tree1[i].parentElement.classList.add('open');
+
+        }
+
+    }
+    function hideAll($selectName) {
+
+
+        let tree = document.querySelectorAll('ul.tree a:not(:last-child)');
+        for(var i = 0; i < tree.length; i++){
+
+            if (tree[i].innerHTML === selectName) {
+                tree[i].parentElement.classList.add('open');
+
+            }
+            tree[i].addEventListener('click', function(e) {
+                var parent = e.target.parentElement;
+                var classList = parent.classList;
+
+                if(classList.contains("open")) {
+                    classList.remove('open');
+                    var opensubs = parent.querySelectorAll(':scope .open');
+                    for(var i = 0; i < opensubs.length; i++){
+                        opensubs[i].classList.remove('open');
+                    }
+                } else {
+                    classList.add('open');
+                }
+            });
+        }
+    }
+
+
+
+
+
+
+
+
+
+</script>
+
 <body>
     <div>
-        <select>
-            <option value="id">Сотрудник 1</option>
-            <option value="id">Сотрудник 1</option>
-            <option value="id">Сотрудник 1</option>
-            <option value="id">Сотрудник 1</option>
-            <option value="id">Сотрудник 1</option>
-            <option value="id">Сотрудник 1</option>
-            <option value="id">Сотрудник 1</option>
+        <select id="listEmployers">
+
         </select>
     </div>
-    <div class="treeHTML">Сайт
-        <div>Блог
-            <details><summary></summary>
-                <div>HTML</div>
-                <div>CSS</div>
-                <div>JavaScript</div>
-            </details>
-        </div>
-        <div>Контакты</div>
+    <ul class="tree">
+    <div id="container" >
+        <ul id="first">
+
+        </ul>
     </div>
+    </ul>
+
+
 </body>
 </html>
+
