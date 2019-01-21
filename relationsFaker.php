@@ -11,7 +11,7 @@ require __DIR__ . '/config.php';
 //$link = mysqli_connect("localhost", "root", "madahyryt", "testQuest");
 //$link->set_charset("utf8");
 $link = mysqli_connect($host, $username, $password, $dbname);
-print_r($link);
+
 $link->set_charset("utf8");
 $act =$_POST['action'];
 $act = json_decode($_POST['data']);
@@ -41,7 +41,7 @@ function CreateTree($array,$sub)
 
 
 if ($act->action == 'getListName') {
-    $query = "SELECT name FROM employers";
+    $query = "SELECT name FROM ". $dbname.".employers";
 
     $result = $link->query($query);
     while ($line = mysqli_fetch_assoc($result)) {
@@ -53,7 +53,7 @@ else  if($act->action == 'getListFromEmployer')
     {
         $name = $act->name;
 
-        $query = "SELECT * FROM employers";
+        $query = "SELECT * FROM ". $dbname.".employers";
         $name = $act->name;
         $idEmployer = -1;
         $head_id = -1;
@@ -85,7 +85,7 @@ else  if($act->action == 'getListFromEmployer')
 
     }
     else {
-        $query = "SELECT * FROM employers";
+        $query = "SELECT * FROM  ". $dbname.".employers";
 
         $result = $link->query($query);
 
