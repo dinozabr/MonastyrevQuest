@@ -11,7 +11,7 @@ require __DIR__ . '/config.php';
 //$link = mysqli_connect("localhost", "root", "madahyryt", "testQuest");
 //$link->set_charset("utf8");
 $link = mysqli_connect($host, $username, $password, $dbname);
-echo $host . ' ' . $username . ' ' . ' ' . $password . ' ' . $dbname;
+print_r($link);
 $link->set_charset("utf8");
 $act =$_POST['action'];
 $act = json_decode($_POST['data']);
