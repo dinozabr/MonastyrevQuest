@@ -1,6 +1,7 @@
 {
     "require": {
         "fzaninotto/faker": "^1.8",
-      "ext-json": "*"
+      "ext-json": "*",
+      "ext-mysql": "*"
     }
 }
