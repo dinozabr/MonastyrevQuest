@@ -41,7 +41,7 @@ function CreateTree($array,$sub)
 
 
 if ($act->action == 'getListName') {
-    $query = "SELECT name FROM testQuest.employers";
+    $query = "SELECT name FROM employers";
 
     $result = $link->query($query);
     while ($line = mysqli_fetch_assoc($result)) {
@@ -53,7 +53,7 @@ else  if($act->action == 'getListFromEmployer')
     {
         $name = $act->name;
 
-        $query = "SELECT * FROM testQuest.employers";
+        $query = "SELECT * FROM employers";
         $name = $act->name;
         $idEmployer = -1;
         $head_id = -1;
@@ -85,7 +85,7 @@ else  if($act->action == 'getListFromEmployer')
 
     }
     else {
-        $query = "SELECT * FROM testQuest.employers";
+        $query = "SELECT * FROM employers";
 
         $result = $link->query($query);
 
