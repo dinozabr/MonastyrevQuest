@@ -9,11 +9,11 @@
 
 
 
-if ($_SERVER['SERVER_NAME'] == "thawing-stream-94645.herokuapp.com") {
-    $host = 'us-cdbr-iron-east-01.cleardb.net';
-    $username = 'b96f3dfb1de729';
-    $password = '015e215c';
-    $dbname = 'heroku_49c5e89e0448e08';
+if ($_SERVER['SERVER_NAME'] == "mighty-shelf-66755.herokuapp.com") {
+    $host = 'us-cdbr-iron-east-03.cleardb.net';
+    $username = 'bdcf4b6759d365';
+    $password = '3ecbf07';
+    $dbname = 'heroku_7af04bb30d5d26c';
 } else {
 
     $host = 'localhost';
