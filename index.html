@@ -49,8 +49,8 @@
     function createList(person) {
         let list = document.getElementById("listEmployers");
         let el = document.createElement('option');
-        //устанавливается событие на пусутю строку в select ' '
-        el.innerHTML='';
+
+        el.innerHTML=' ';
         list.appendChild(el);
         person.forEach(function(item, i) {
             let el = document.createElement('option');
@@ -60,15 +60,18 @@
 
         list.onchange = function (){
 
-            showListFromEmployer(this.value);
+            if (this.value.length > 2) {
+
+                showListFromEmployer(this.value);
+            }
+            else{
+                //если выбран пустой селект, то вывод всего списка
+                createFullList();
+            }
         };
         //Функция для получения всего дерева
         createFullList();
 
-    }
-
-    function test() {
-        console.log(123);
     }
 
 
