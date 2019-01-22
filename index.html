@@ -6,7 +6,22 @@
     <link rel="stylesheet" href="style.css">
     <script src="jquery3.js"></script>
 </head>
+<body>
+<div>
+    <select id="listEmployers" >
 
+    </select>
+</div>
+<ul class="tree">
+    <div id="container" >
+        <ul id="first">
+
+        </ul>
+    </div>
+</ul>
+
+
+</body>
 <script>
 
     let allPersons={};
@@ -34,27 +49,27 @@
     function createList(person) {
         let list = document.getElementById("listEmployers");
         let el = document.createElement('option');
+        //устанавливается событие на пусутю строку в select ' '
         el.innerHTML='';
-        el.addEventListener('click',function (e) {
-            createFullList();
-        });
         list.appendChild(el);
         person.forEach(function(item, i) {
             let el = document.createElement('option');
-            el.id=item.id;
             el.innerHTML=item.name;
-            el.addEventListener('click',function (e) {
-                showListFromEmployer(item.name);
-            });
             list.appendChild(el);
-
         });
 
+        list.onchange = function (){
+
+            showListFromEmployer(this.value);
+        };
         //Функция для получения всего дерева
         createFullList();
 
     }
 
+    function test() {
+        console.log(123);
+    }
 
 
     function showListFromEmployer(name){
@@ -174,12 +189,14 @@
     }
 
     function hideAll() {
+
         let tree = document.querySelectorAll('ul.tree a:not(:last-child)');
         for(let i = 0; i < tree.length; i++){
             if (tree[i].innerHTML === selectName) {
                 tree[i].parentElement.classList.add('open');
 
             }
+
 
             tree[i].addEventListener('click', function(e) {
                 let parent = e.target.parentElement;
@@ -200,21 +217,6 @@
 
 </script>
 
-<body>
-    <div>
-        <select id="listEmployers">
 
-        </select>
-    </div>
-    <ul class="tree">
-        <div id="container" >
-            <ul id="first">
-
-            </ul>
-        </div>
-    </ul>
-
-
-</body>
 </html>
 
