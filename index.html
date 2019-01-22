@@ -2,19 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Main page</title>
     <link rel="stylesheet" href="style.css">
     <script src="jquery3.js"></script>
 </head>
 
 <script>
 
-    var allPersons={};
-    let person={};
+    let allPersons={};
     let selectName = '';
     $( document ).ready(function() {
 
-        var  dates = {
+        let  dates = {
             "action": "getListName",
         };
         $.ajax({
@@ -22,13 +21,10 @@
             type: 'POST',
             dataType: 'JSON',
             success: function (data) {
-
                 createList(data);
             },
             data: {data: JSON.stringify(dates)}
         });
-
-
 
     });
 
@@ -63,31 +59,21 @@
 
     function showListFromEmployer(name){
         clearList();
-        d = document.getElementById('container');
-            // let first = document.getElementById('first');
-            // let ul = document.createElement('ul');
-            //
-            // let li = document.createElement('li');
-            // li.innerHtml = name;
-            // ul.appendChild(li);
-            //
-            //
-            // d.appendChild(ul);
-            selectName = name;
-            var  dates = {
-                'action': 'getListFromEmployer',
-                'name' : name,
-            };
-            $.ajax({
-                url: 'relationsFaker.php',
-                type: 'POST',
-                dataType: 'JSON',
-                success: function (data) {
-
-                    createTree(d,data,false);
-                },
-                data: {data: JSON.stringify(dates)}
-            });
+        let d = document.getElementById('container');
+        selectName = name;
+        let  dates = {
+            'action': 'getListFromEmployer',
+            'name' : name,
+        };
+        $.ajax({
+            url: 'relationsFaker.php',
+            type: 'POST',
+            dataType: 'JSON',
+            success: function (data) {
+                createTree(d,data,false);
+            },
+            data: {data: JSON.stringify(dates)}
+        });
 
 
 
@@ -134,17 +120,17 @@
     }
 
     function createTreeDom(obj) {
-        // если нет детей, то рекурсивный вызов ничего не возвращает
-        // так что вложенный UL не будет создан
+        // если нет детей, то рекурсия ничего не возвращает
+
         if (isObjectEmpty(obj)) return;
 
-        var ul = document.createElement('ul');
+        let ul = document.createElement('ul');
 
-        for (var key in obj) {
-            var li = document.createElement('li');
+        for (let key in obj) {
+            let li = document.createElement('li');
             li.innerHTML = key;
 
-            var childrenUl = createTreeDom(obj[key]);
+            let childrenUl = createTreeDom(obj[key]);
             if (childrenUl) {
                 li.appendChild(childrenUl);
             }
@@ -164,28 +150,17 @@
     }
 
     function formatTree() {
-        var tree = document.getElementsByTagName('ul')[0];
+        let tree = document.getElementsByTagName('ul')[0];
+        let treeLis = tree.getElementsByTagName('li');
 
-        /* catch clicks on whole tree */
-
-
-        var treeLis = tree.getElementsByTagName('li');
-        /* wrap all textNodes into spans */
-        for (var i = 0; i < treeLis.length; i++) {
-
+        for (let i = 0; i < treeLis.length; i++) {
             let li = treeLis[i];
-
             let a = document.createElement('a');
+
             a.setAttribute('href','#');
             li.insertBefore(a, li.firstChild);
             a.appendChild(a.nextSibling);
-
-
         }
-        //Вешается обработчик на все пункты меню
-
-
-        //раскрывается весь список
 
     }
 
@@ -194,28 +169,26 @@
         let tree1 = document.querySelectorAll('ul.tree a:not(:last-child)');
         for (let i = 0; i < tree1.length; i++) {
             tree1[i].parentElement.classList.add('open');
-
         }
 
     }
-    function hideAll($selectName) {
 
-
+    function hideAll() {
         let tree = document.querySelectorAll('ul.tree a:not(:last-child)');
-        for(var i = 0; i < tree.length; i++){
-
+        for(let i = 0; i < tree.length; i++){
             if (tree[i].innerHTML === selectName) {
                 tree[i].parentElement.classList.add('open');
 
             }
+
             tree[i].addEventListener('click', function(e) {
-                var parent = e.target.parentElement;
-                var classList = parent.classList;
+                let parent = e.target.parentElement;
+                let classList = parent.classList;
 
                 if(classList.contains("open")) {
                     classList.remove('open');
-                    var opensubs = parent.querySelectorAll(':scope .open');
-                    for(var i = 0; i < opensubs.length; i++){
+                    let opensubs = parent.querySelectorAll(':scope .open');
+                    for(let i = 0; i < opensubs.length; i++){
                         opensubs[i].classList.remove('open');
                     }
                 } else {
@@ -224,14 +197,6 @@
             });
         }
     }
-
-
-
-
-
-
-
-
 
 </script>
 
@@ -242,11 +207,11 @@
         </select>
     </div>
     <ul class="tree">
-    <div id="container" >
-        <ul id="first">
+        <div id="container" >
+            <ul id="first">
 
-        </ul>
-    </div>
+            </ul>
+        </div>
     </ul>
 
 
